@@ -1,0 +1,32 @@
+{
+  "name": "employee-leave-management-system",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node --watch src/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bhavishaya-khandelwal-dianapps/Employee-Leave-Management-System.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/bhavishaya-khandelwal-dianapps/Employee-Leave-Management-System/issues"
+  },
+  "homepage": "https://github.com/bhavishaya-khandelwal-dianapps/Employee-Leave-Management-System#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.9.6",
+    "morgan": "^1.10.0",
+    "validator": "^13.12.0",
+    "winston": "^3.17.0"
+  }
+}
