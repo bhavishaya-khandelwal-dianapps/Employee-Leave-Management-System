@@ -10,7 +10,7 @@ The Employee Leave Management System is a web-based application designed to help
 
 
 
-================================ Features ================================
+================================ Features ==================================
 User Authentication:
 JWT-based login system for different roles (Employee, HR, Management).
 Leave Requests Management:
