@@ -8,12 +8,12 @@ const control = require("../controllers/controller.js");
 
 
 //* Register a new user  
-router.post("/register", authenticate.generateToken, control.createNewUser);
+router.post("/register", control.createNewUser);
 
 
 
 //* Login a registered user 
-router.post("/login", authenticate.generateToken, control.loginUser);
+router.post("/login", control.loginUser);
 
 
 

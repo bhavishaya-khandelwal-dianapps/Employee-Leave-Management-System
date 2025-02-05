@@ -24,6 +24,7 @@ const userSchema = new mongoose.Schema({
         type : String, 
         required : true, 
         trim : true,
+        unique : true, 
         validate(value) {
             if(value.length < 10 || value.length > 10) throw new Error("Your phone number is invalid");
         }

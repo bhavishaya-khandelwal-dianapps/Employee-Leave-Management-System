@@ -5,6 +5,7 @@ const common = require("../common/checkDateAlreadyExistOrNot.js")
 const validate = require("../common/validateAllFields.js");
 const LeaveRecord = require("../models/leaveRecordCollection.js");
 const User = require("../models/userCollection.js");
+const { generateToken } = require("../middlewares/generateToken.js");
 
 
 //* This function is used to register a new user 
@@ -36,14 +37,18 @@ async function createNewUser(req, res) {
         
         const result = await service.createUser(req.body);
         if(!result) return res.status(400).send("User already exist");
+
+        //* Generate a new token 
+        let token = generateToken(body.email);
+
         return res.status(201).send({
             message : "A new user is created", 
-            token : req.token, 
+            token : token, 
             user : result
         });
     }
     catch(error) {
-        res.status(400).send("User already exist");
+        res.status(400).send(`${error}`);
     }
 };
 
@@ -67,10 +72,12 @@ async function loginUser(req, res) {
 
         if(!isPasswordMatch) return res.status(400).send("Please provide valid email and password");
 
+        //* Generate token  
+        let token = generateToken(email);
 
         return res.status(200).send({
             message : "User logged in successfully",
-            token : req.token, 
+            token : token, 
             user : userData 
         });
     }
