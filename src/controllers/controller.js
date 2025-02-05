@@ -253,15 +253,24 @@ async function takeActionOnLeaveRequest(req, res) {
         } 
         const status = (req.body.status).toUpperCase();
         let id = req.params.id;
-        console.log('id :', id);
-        console.log("Status :", status);
+        let ROLE = await User.findOne({ _id : id }).select({ role : 1 });
+
+        //* HR can't take action on their own request  
+        if(role.role == "HR" && ROLE.role == "HR") return res.status(400).send("Sorry, you don't have permission");
 
         const updateOldestRequest = await service.updateOldestLeaveRequest(id, status);
-
-        return res.status(200).send({
-            body : status, 
-            oldestLeaveRequest : updateOldestRequest
-        });
+        if(updateOldestRequest == null) {
+            return res.status(400).send({
+                body : status, 
+                message : "Please check userID || No Pending leave requests",
+            });
+        }
+        else {
+            return res.status(200).send({
+                body : status, 
+                message : updateOldestRequest
+            });
+        }
     }
     catch(error) {
         res.status(400).send(`${error}`);
