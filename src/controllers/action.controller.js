@@ -1,36 +1,48 @@
+const userService = require("../services/user.service.js");
+const leaveService = require("../services/leave.service.js");
+
 
 //* This function is used to take action on leave request 
-async function takeActionOnLeaveRequest(req, res) {
+async function respondToLeaveRequest(req, res) {
     try {
-        let email = req.email;
-        console.log("Email =", email);
-        let role = await User.findOne({ email }).select({ role : 1 });
-        if(role.role == "EMPLOYEE") {
+        let userByEmail = await userService.getUserByEmail(req.email);
+        console.log('userByEmail :', userByEmail);
+        let role = userByEmail.role;
+
+        if(role == "EMPLOYEE") {
             return res.status(400).send("Sorry, you don't have permission");
         } 
-        const status = (req.body.status).toUpperCase();
+
+
+        let status = (req.body.status).toUpperCase();
         let id = req.params.id;
-        let ROLE = await User.findOne({ _id : id }).select({ role : 1 });
+
+
+        let userById = await userService.getUserById(id);
+        console.log('userById :', userById);
+        let role_2 = userById.role; 
 
         //* HR can't take action on their own request  
-        if(role.role == "HR" && ROLE.role == "HR") return res.status(400).send("Sorry, you don't have permission");
+        if(role == "HR" && role_2 == "HR") return res.status(400).send("Sorry, you don't have permission");
 
-        const updateOldestRequest = await service.updateOldestLeaveRequest(id, status);
-        if(updateOldestRequest == null) {
-            return res.status(400).send({
-                body : status, 
-                message : "Please check userID || No Pending leave requests",
-            });
-        }
-        else {
-            return res.status(200).send({
-                body : status, 
-                message : updateOldestRequest
-            });
-        }
+
+        const earliestRequestStatus = await leaveService.updateEarliestPendingLeave(userById, status);
+
+        return res.status(200).send({
+            body : status, 
+            message : earliestRequestStatus
+        });
+        
     }
     catch(error) {
         res.status(400).send(`${error}`);
     }
 };
 
+
+
+
+
+module.exports = {
+    respondToLeaveRequest
+}

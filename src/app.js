@@ -11,11 +11,11 @@ const PORT = process.env.PORT;
 require("./config/connection.js");
 
 
-//* Require routes.js file 
-// const actionRouter = require("./routers/action.routes.js");
+//* Require router files 
+const actionRouter = require("./routers/action.routes.js");
 const authRouter = require("./routers/auth.routes.js");
 const holidayRouter = require("./routers/holiday.routes.js");
-// const leaveRouter = require("./routers/leave.routes.js");
+const leaveRouter = require("./routers/leave.routes.js");
 const userRouter = require("./routers/user.routes.js");
 
 
@@ -50,10 +50,10 @@ app.use(express.json());
 
 
 //* Define router middleware 
-// app.use(actionRouter);
+app.use(actionRouter);
 app.use(authRouter);
 app.use(holidayRouter);
-// app.use(leaveRouter);
+app.use(leaveRouter);
 app.use(userRouter);
 
 

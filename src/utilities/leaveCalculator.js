@@ -1,4 +1,4 @@
-const Holiday = require("../models/holidayCollection.js");
+const Holiday = require("../models/holiday.model.js");
 
 
 
@@ -35,7 +35,7 @@ function countSaturdaysAndSundays(startDate, endDate, holidaysArray) {
 
   
 
-function getLeaveCount(startDate, endDate, shift, publicHolidayArray) {
+function calculateLeaveCount(startDate, endDate, shift, publicHolidayArray) {
 
     let holidaysArray = [];
     for(let value of publicHolidayArray) {
@@ -48,8 +48,7 @@ function getLeaveCount(startDate, endDate, shift, publicHolidayArray) {
     //* Convert the difference from milliseconds to days
     const millisecondsInOneDay = 1000 * 60 * 60 * 24;
     const differenceInDays = differenceInMilliseconds / millisecondsInOneDay;
-
-    console.log("Leave Count =", differenceInDays + 1);
+    
 
     let safeLeaves = countSaturdaysAndSundays(startDate, endDate, holidaysArray);
     let { saturdays, sundays, publicHolidays } = safeLeaves;
@@ -72,5 +71,5 @@ function getLeaveCount(startDate, endDate, shift, publicHolidayArray) {
 
 
 module.exports = {
-    getLeaveCount
+    calculateLeaveCount
 }

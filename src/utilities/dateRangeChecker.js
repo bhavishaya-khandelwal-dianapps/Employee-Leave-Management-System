@@ -1,4 +1,4 @@
-function isDateInRange(dateToCheck, startDate, endDate) {
+function checkDateInRange(dateToCheck, startDate, endDate) {
 
     //* Check if the date is between start and end
     return (dateToCheck >= startDate && dateToCheck <= endDate);
@@ -8,5 +8,5 @@ function isDateInRange(dateToCheck, startDate, endDate) {
 
 
 module.exports = {
-    isDateInRange
+    checkDateInRange
 }

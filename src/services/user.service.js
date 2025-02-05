@@ -23,9 +23,17 @@ async function registerNewUser(body) {
 //* Now, I want to find user using it's email 
 async function getUserByEmail(email) {
     let user = await User.findOne({ email });
-    if(user == null) throw new Error("Sorry user not found, check your token or email");
+    if(user == null) throw new Error("Something went wrong, please check your token or email(if needed)");
     return user;
-}
+};
+
+
+//* Now, I want to find user using it's id
+async function getUserById(id) {
+    let user = await User.findOne({ _id : id });
+    if(user == null) throw new Error("Something went wrong, please check user id");
+    return user;
+};
 
 
 //* This function is used to find all users  
@@ -52,5 +60,6 @@ module.exports = {
     registerNewUser, 
     getUserByEmail,
     retrieveUsers,
-    retrieveUsersByRole
+    retrieveUsersByRole,
+    getUserById
 };

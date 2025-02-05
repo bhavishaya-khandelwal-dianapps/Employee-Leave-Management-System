@@ -31,8 +31,16 @@ async function modifyHolidayById(id, toUpdate) {
 
 
 
+
+async function retrieveHolidayDates() {
+    const holidayDates = await Holiday.find({ }).select({ eventDate : 1 });
+    return holidayDates;
+};
+
+
 module.exports = {
     retrievePublicHolidays,
     saveHoliday,
-    modifyHolidayById
+    modifyHolidayById,
+    retrieveHolidayDates
 }
