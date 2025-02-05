@@ -12,7 +12,11 @@ require("./config/connection.js");
 
 
 //* Require routes.js file 
-const router = require("./routers/routes.js");
+// const actionRouter = require("./routers/action.routes.js");
+const authRouter = require("./routers/auth.routes.js");
+const holidayRouter = require("./routers/holiday.routes.js");
+// const leaveRouter = require("./routers/leave.routes.js");
+const userRouter = require("./routers/user.routes.js");
 
 
 //* Define morgan format  
@@ -45,10 +49,12 @@ app.use(express.urlencoded({
 app.use(express.json());
 
 
-
 //* Define router middleware 
-app.use(router);
-
+// app.use(actionRouter);
+app.use(authRouter);
+app.use(holidayRouter);
+// app.use(leaveRouter);
+app.use(userRouter);
 
 
 

@@ -41,7 +41,8 @@ const userSchema = new mongoose.Schema({
     gender : {
         type : String, 
         required : true, 
-        trim : true
+        trim : true,
+        uppercase : true
     },
     availableLeaves : {
         type : String, 

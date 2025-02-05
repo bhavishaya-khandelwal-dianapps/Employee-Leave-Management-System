@@ -1,40 +1,3 @@
-//* Require necessary collections 
-const User = require("../models/userCollection.js");
-const LeaveRecord = require("../models/leaveRecordCollection.js");
-const Holiday = require("../models/holidayCollection.js");
-const common = require("../common/getLeaveCount.js");
-const { getPublicHolidaysArray } = require("../common/getPublicHolidays.js");
-
-
-//* This function is going to create a new user  
-async function createUser(body) {
-    const newUser = new User(body);
-    const result = await newUser.save();
-    console.log('result :', result);
-    return result;
-};
-
-
-
-//* This function is used to find a specific user  
-async function findUser(email) {
-    const user = await User.findOne({ email });
-    return user;
-}; 
-
-
-
-//* This function is used to find all users  
-async function listAllUsers(role) {
-    if(role == undefined) {
-        const users = await User.find({}).select({name : 1, role : 1, designation : 1, phoneNumber : 1, gender : 1, email : 1, createdAt : 1}).sort({ role : -1 });
-        return users;
-    }
-    const users = await User.find({ role }).select({name : 1, role : 1, designation : 1, phoneNumber : 1, gender : 1, email : 1, createdAt : 1});
-    return users;
-}
-
-
 
 //* This function is used to request leave 
 async function requestLeave(email, body) {
@@ -100,35 +63,6 @@ async function getLeaveDetails(email) {
 
 
 
-//* Add holiday to the collection 
-async function addHolidayIntoCollection(body) {
-    const holiday = new Holiday(body);
-    const result = await holiday.save();
-    return result;
-};
-
-
-
-
-//* List all the public holidays  
-async function getPublicHolidays() {
-    const result = await Holiday.find( {} );
-    return result;
-};
-
-
-
-
-//* Update holiday using id  
-async function updateSpecificHoliday(id, toUpdate) {
-    console.log("toUpdate =", toUpdate);
-    let result = await Holiday.findByIdAndUpdate({ _id : id }, { $set : toUpdate }, { new : true });
-    console.log("Result =", result);
-    return result;
-};
-
-
-
 
 //* This function is used to update the oldest leave request whose status is "NULL" 
 async function updateOldestLeaveRequest(id, status) {
@@ -178,17 +112,3 @@ async function updateOldestLeaveRequest(id, status) {
 
     return updatedUserDetails;
 };
-
-
-
-module.exports = {
-    createUser, 
-    findUser, 
-    listAllUsers, 
-    requestLeave, 
-    getLeaveDetails, 
-    addHolidayIntoCollection, 
-    getPublicHolidays, 
-    updateSpecificHoliday, 
-    updateOldestLeaveRequest
-}
